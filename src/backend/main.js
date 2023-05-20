@@ -1,5 +1,7 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu } = require('electron')
 const { setupTitlebar, attachTitlebarToWindow } = require("custom-electron-titlebar/main")
+const { menuTemplate } = require("../frontend/menu")
+
 const path = require('path')
 const frontend = "./src/frontend"
 
@@ -15,8 +17,15 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-  win.loadFile(path.join(frontend, 'index.html'))
   attachTitlebarToWindow(win)
+
+  //TODO: self implement modern toolbar OR pull request to current module for changing style
+  var menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu)
+
+  win.loadFile(path.join(frontend, 'index.html'))
+
+  win.webContents.openDevTools()
 }
 
 app.whenReady().then(() => {
