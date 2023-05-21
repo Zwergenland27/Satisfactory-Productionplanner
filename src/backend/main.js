@@ -1,11 +1,8 @@
-const { app, BrowserWindow, Menu } = require('electron')
-const { setupTitlebar, attachTitlebarToWindow } = require("custom-electron-titlebar/main")
-const { menuTemplate } = require("../frontend/menu")
+const { app, BrowserWindow, Menu, globalShortcut, ipcMain } = require('electron')
+const { menuTemplate } = require("../frontend/scripts/menu")
 
 const path = require('path')
 const frontend = "./src/frontend"
-
-setupTitlebar();
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -17,15 +14,20 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-  attachTitlebarToWindow(win)
 
   //TODO: self implement modern toolbar OR pull request to current module for changing style
   var menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu)
 
+  createTitlebar(win)
+
   win.loadFile(path.join(frontend, 'index.html'))
 
   win.webContents.openDevTools()
+
+  globalShortcut.register('f5', () => {
+    win.reload();
+  })
 }
 
 app.whenReady().then(() => {
@@ -41,5 +43,23 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
+    globalShortcut.unregisterAll()
   }
 })
+
+function createTitlebar(window) {
+  window.on('unmaximize', () => {
+    window.webContents.send('window-control', 'window-unmaximized')
+  })
+  window.on('maximize', () => {
+    window.webContents.send('window-control', 'window-maximized')
+  })
+  ipcMain.on('window-control', (event, type) => {
+    switch(type){
+      case 'window-minimize': window.minimize(); break;
+      case 'window-maximize': window.maximize(); break;
+      case 'window-unmaximize': window.restore(); break;
+      case 'window-close': window.close(); break;
+    }
+  })
+}

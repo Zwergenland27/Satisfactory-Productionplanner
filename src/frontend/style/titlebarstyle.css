@@ -1,0 +1,35 @@
+nav {
+    display: grid;
+    grid-template-columns: auto auto 138px;
+    width: 100%;
+    height: 32px;
+    color: #BBB;
+    background-color: #222;
+    user-select: none;
+    -webkit-app-region: drag;
+}
+
+nav span {
+    line-height: 32px;
+}
+
+nav .controls {
+    display: grid;
+    grid-template-columns: 46px 46px 46px;
+    font-family: "Segoe MDL2 Assets";
+    text-align: center;
+    height: 100%;
+}
+
+nav .controls span {
+    line-height: 32px;
+    -webkit-app-region: none;
+}
+
+nav .controls span:hover {
+    background-color: #333;
+}
+
+nav .controls span:active {
+    background-color: #555;
+}

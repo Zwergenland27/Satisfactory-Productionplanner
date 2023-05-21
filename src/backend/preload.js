@@ -1,16 +1,6 @@
-const { Titlebar } = require('custom-electron-titlebar')
+const {ipcRenderer} = require('electron')
+const View = require('../frontend/scripts/view')
 
 window.addEventListener('DOMContentLoaded', () => {
-  new Titlebar({
-    backgroundColor: '#333',
-    shadow: true
-  });
-  const replaceText = (selector, text) => {
-    const element = document.getElementById(selector)
-    if (element) element.innerText = text
-  }
-
-  for (const dependency of ['chrome', 'node', 'electron']) {
-    replaceText(`${dependency}-version`, process.versions[dependency])
-  }
+    let view = new View(ipcRenderer)
 })

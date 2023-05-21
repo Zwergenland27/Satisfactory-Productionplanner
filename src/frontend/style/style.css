@@ -1,0 +1,45 @@
+body {
+    margin: 0px;
+}
+
+aside {
+    background-color: #333;
+    min-width: 15em;
+    border-right: 4px solid #FF8C00;
+}
+
+.buildings-container {
+    border-bottom: 3px solid black
+}
+
+.collapsible {
+    padding: 8px;
+    color: #EEE;
+    background-color: transparent;
+    font-size: 1em;
+    text-align: left;
+    width: 100%;
+    border: none;
+    border-top: 3px solid black;
+}
+
+.collapsible::before {
+    float: right;
+    content: '+';
+}
+
+.collapsible:hover {
+    background-color: #555;
+}
+
+.collapsible-item {
+    display: none;
+}
+
+h1 {
+    text-align: center;
+}
+
+main {
+    flex-grow: 1;
+}
