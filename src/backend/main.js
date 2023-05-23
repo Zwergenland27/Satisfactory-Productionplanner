@@ -1,5 +1,5 @@
-const { app, BrowserWindow, Menu, globalShortcut, ipcMain } = require('electron')
-const { menuTemplate } = require("../frontend/scripts/menu")
+const { app, BrowserWindow, globalShortcut } = require('electron')
+const Titlebar = require("../frontend/scripts/titlebar")
 
 const path = require('path')
 const frontend = "./src/frontend"
@@ -15,11 +15,10 @@ function createWindow () {
     }
   })
 
-  //TODO: self implement modern toolbar OR pull request to current module for changing style
-  var menu = Menu.buildFromTemplate(menuTemplate);
-  Menu.setApplicationMenu(menu)
+  //var menu = Menu.buildFromTemplate(menuTemplate);
+  //Menu.setApplicationMenu(menu)
 
-  createTitlebar(win)
+  Titlebar.initialize(win)
 
   win.loadFile(path.join(frontend, 'index.html'))
 
@@ -46,20 +45,3 @@ app.on('window-all-closed', () => {
     globalShortcut.unregisterAll()
   }
 })
-
-function createTitlebar(window) {
-  window.on('unmaximize', () => {
-    window.webContents.send('window-control', 'window-unmaximized')
-  })
-  window.on('maximize', () => {
-    window.webContents.send('window-control', 'window-maximized')
-  })
-  ipcMain.on('window-control', (event, type) => {
-    switch(type){
-      case 'window-minimize': window.minimize(); break;
-      case 'window-maximize': window.maximize(); break;
-      case 'window-unmaximize': window.restore(); break;
-      case 'window-close': window.close(); break;
-    }
-  })
-}
