@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "a satisfactory production line planner tool",
   "main": "./src/backend/main.js",
-  "dependencies": {
-    "custom-electron-titlebar": "^4.2.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "electron": "^24.3.1"
   },
