@@ -35,13 +35,16 @@ module.exports = class Menu {
 
     #createMenu(template) {
         template.forEach(mainMenu => {
+            let container = document.createElement('div')
+
             let mainItem = document.createElement('span')
             mainItem.textContent = mainMenu.label
-            this.#menuDOM.appendChild(mainItem)
+            container.appendChild(mainItem)
 
             let submenuBox = document.createElement('dialog')
             submenuBox.classList.add('hidden')
-            this.#menuDOM.appendChild(submenuBox)
+            container.appendChild(submenuBox)
+            this.#menuDOM.appendChild(container)
 
             mainItem.addEventListener('click', () => {
                 if(this.#visible) {
@@ -51,6 +54,7 @@ module.exports = class Menu {
                 else{
                     this.#visible = true
                     submenuBox.classList.remove('hidden')
+                    this.#oldDialog = submenuBox
                 }
             });
 
