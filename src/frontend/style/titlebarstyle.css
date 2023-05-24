@@ -1,4 +1,4 @@
-nav {
+header {
     display: grid;
     grid-template-columns: fit-content(10em) auto 138px;
     width: 100%;
@@ -11,7 +11,7 @@ nav {
     -webkit-app-region: drag;
 }
 
-nav #menu {
+header #menu {
     display: flex;
     flex-direction: row;
     padding-left: 5px;
@@ -20,25 +20,25 @@ nav #menu {
     -webkit-app-region: none;
 }
 
-nav #menu div {
+header #menu div {
     position: relative;
 }
 
-nav #menu div span {
+header #menu div span {
     text-align: center;
     padding: 4px 5px;
     border-radius: 4px;
 }
 
-nav #menu div span:hover {
+header #menu div span:hover {
     background-color: #444;
 }
 
-nav #menu div .hidden {
+header #menu div .hidden {
     display: none;
 }
 
-nav #menu div dialog {
+header #menu div dialog {
     display: flex;
     flex-direction: column;
     padding: 0px;
@@ -50,13 +50,13 @@ nav #menu div dialog {
 }
 
 
-nav span {
+header span {
     font-size: 0.9em;
     line-height: 32px;
     text-align: center;
 }
 
-nav .controls {
+header .controls {
     display: grid;
     grid-template-columns: 46px 46px 46px;
     font-family: "Segoe MDL2 Assets";
@@ -64,15 +64,15 @@ nav .controls {
     height: 100%;
 }
 
-nav .controls span {
+header .controls span {
     line-height: 32px;
     -webkit-app-region: none;
 }
 
-nav .controls span:hover {
+header .controls span:hover {
     background-color: #444;
 }
 
-nav .controls span:active {
+header .controls span:active {
     background-color: #555;
 }
