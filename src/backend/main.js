@@ -6,6 +6,8 @@ const frontend = "./src/frontend"
 
 function createWindow () {
   const win = new BrowserWindow({
+    minWidth: 800,
+    minHeight: 600,
     width: 800,
     height: 600,
     frame: false,
@@ -14,9 +16,6 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-
-  //var menu = Menu.buildFromTemplate(menuTemplate);
-  //Menu.setApplicationMenu(menu)
 
   Titlebar.initialize(win)
 
