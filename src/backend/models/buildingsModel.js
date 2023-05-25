@@ -1,13 +1,4 @@
-class Building {
-    #name
-    constructor(name) {
-        this.#name = name
-    }
-
-    getName() {
-        return this.#name
-    }
-}
+const Building = require('./building')
 
 module.exports = class BuildingsModel {
     
@@ -29,7 +20,14 @@ module.exports = class BuildingsModel {
     }
 
     #loadBuildings() {
+        this.#logistics.push(new Building("LOGISTIC", 120, 30))
+        this.#logistics.push(new Building("LOGISTIC", 200, 70))
         this.#logistics.push(new Building("LOGISTIC"))
+        this.#logistics.push(new Building("LOGISTIC"))
+        this.#logistics.push(new Building("LOGISTIC"))
+        this.#logistics.push(new Building("LOGISTIC"))
+        this.#logistics.push(new Building("LOGISTIC"))
+
         this.#manufacturers.push(new Building("MANUFACTURER"))
         this.#smelters.push(new Building("SMELTER"))
         this.#miners.push(new Building("MINER"))

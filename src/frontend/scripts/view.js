@@ -11,27 +11,52 @@ module.exports = class View {
     addTier(category, buildings) {
         let buildingsSelector = document.getElementById('buildings')
 
-        let openTierBuilingsButton = document.createElement('button')
-        openTierBuilingsButton.classList.add('collapsible')
-        openTierBuilingsButton.id = `collapsible-${category}`
-        openTierBuilingsButton.innerText = category
+        let openCategory = document.createElement('button')
+        openCategory.classList.add('collapsible')
+        openCategory.id = `collapsible-${category}`
+        openCategory.innerText = category
 
-        let tierBuildingsContent = document.createElement('div')
-        tierBuildingsContent.classList.add('collapsible-item')
-        tierBuildingsContent.id = category
+        let categoryContent = document.createElement('div')
+        categoryContent.classList.add('collapsible-item')
+        categoryContent.id = category
 
-        openTierBuilingsButton.addEventListener('click', (event) => {
-            this.#openTierBuildingsList(event, tierBuildingsContent)
+        openCategory.addEventListener('click', (event) => {
+            this.#openTierBuildingsList(event, categoryContent)
         })
 
-        buildingsSelector.appendChild(openTierBuilingsButton)
-        buildingsSelector.appendChild(tierBuildingsContent)
+        buildings.forEach(building => {
+            this.#addBuilding(categoryContent, building)
+        });
+
+        buildingsSelector.appendChild(openCategory)
+        buildingsSelector.appendChild(categoryContent)
 
     }
 
-    #openTierBuildingsList(event, tierBuildingsContent) {
+    #addBuilding(categoryContent, building) {
+        let container = document.createElement('a')
+        let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+        svg.setAttribute('width', building.width)
+        svg.setAttribute('height', building.height)
+
+        let buildingBoundes = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+        buildingBoundes.setAttribute('width', building.width)
+        buildingBoundes.setAttribute('height', building.height)
+        buildingBoundes.setAttribute('fill', '#FFFFFF')
+
+        
+        let label = document.createElement('label')
+        label.innerText = building.name
+
+        svg.appendChild(buildingBoundes)
+        container.appendChild(svg)
+        container.appendChild(label)
+        categoryContent.appendChild(container)
+    }
+
+    #openTierBuildingsList(event, categoryContent) {
         event.srcElement.classList.toggle('opened')
-        tierBuildingsContent.classList.toggle('opened')
+        categoryContent.classList.toggle('opened')
 
     }
 }
