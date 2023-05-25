@@ -1,16 +1,25 @@
 body {
+    font-family: "Arial";
     margin: 0px;
     background-color: #1f1f1f;
+    height: 100vh;
+}
+
+main {
+    display: grid;
+    grid-template-columns: minmax(10em, 20%) auto;
+    height: calc(100% - 33px);
 }
 
 aside {
-    background-color: #333;
+    color: #EEE;
+    background-color: #222;
     min-width: 15em;
     border-right: 4px solid #FF8C00;
 }
 
 .buildings-container {
-    border-bottom: 3px solid black
+    border-bottom: 1px solid #444
 }
 
 .collapsible {
@@ -21,12 +30,19 @@ aside {
     text-align: left;
     width: 100%;
     border: none;
-    border-top: 3px solid black;
+    border-top: 1px solid #444;
+    cursor: pointer;
 }
 
-.collapsible::before {
+.collapsible::after {
     float: right;
-    content: '+';
+    font-weight: bold;
+    font-family: 'sans-serive';
+    content: '\002B';
+}
+
+.collapsible.opened::after {
+    content: "\2212";
 }
 
 .collapsible:hover {
@@ -35,6 +51,11 @@ aside {
 
 .collapsible-item {
     display: none;
+    min-height: 5em;
+}
+
+.collapsible-item.opened {
+    display: block;
 }
 
 h1 {
