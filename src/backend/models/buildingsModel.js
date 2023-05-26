@@ -1,4 +1,6 @@
 const Building = require('./building')
+const BuildingInterface = require('./buildingInterface')
+const Resource = require('./resource')
 
 module.exports = class BuildingsModel {
     
@@ -20,18 +22,12 @@ module.exports = class BuildingsModel {
     }
 
     #loadBuildings() {
-        this.#logistics.push(new Building("LOGISTIC", 120, 30))
-        this.#logistics.push(new Building("LOGISTIC", 200, 70))
-        this.#logistics.push(new Building("LOGISTIC"))
-        this.#logistics.push(new Building("LOGISTIC"))
-        this.#logistics.push(new Building("LOGISTIC"))
-        this.#logistics.push(new Building("LOGISTIC"))
-        this.#logistics.push(new Building("LOGISTIC"))
+        //this.#logistics.push(new Building("LOGISTIC", 'logistics', 8, 10, [BuildingInterface.INPUT], [BuildingInterface.OUTPUT]))
 
-        this.#manufacturers.push(new Building("MANUFACTURER"))
-        this.#smelters.push(new Building("SMELTER"))
-        this.#miners.push(new Building("MINER"))
-        this.#fluidExtractors.push(new Building("FLUID"))
+        this.#manufacturers.push(new Building("Assembler", 'manufacturers', 10, 15, [Resource.SOLID, BuildingInterface.SOLID], [BuildingInterface.SOLID]))
+        this.#smelters.push(new Building("Smelter", 'smelters', 6, 9, [BuildingInterface.SOLID], [BuildingInterface.SOLID]))
+        this.#miners.push(new Building("Miner Mk.1", "miners", 6, 14, [], [BuildingInterface.SOLID]))
+        //this.#fluidExtractors.push(new Building("FLUID", "fluid-extractors"))
     }
 
     getCategories() {

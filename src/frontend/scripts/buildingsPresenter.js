@@ -15,7 +15,7 @@ module.exports = class BuildingsPresenter {
 
         categories.forEach(category => {
             let buildings = this.#model.getBuildingsOfCategory(category)
-            this.#view.addTier(category, buildings)
+            this.#view.addCategory(category, buildings)
         });
     }
 }
