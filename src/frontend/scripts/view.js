@@ -1,14 +1,21 @@
 module.exports = class View {
+
     #buildingsPresenter
+    #designer
+    #draggedObject
+
     constructor(buildingsPresenter) {
         this.#buildingsPresenter = buildingsPresenter
     }
 
     initializeComponents() {
         this.#buildingsPresenter.getBuildings()
+        this.#designer = document.getElementById('designer')
+        this.#designer.addEventListener('drop',  this.#dropHandler.bind(this), true)
+        this.#designer.addEventListener('dragover', this.#dragoverHandler.bind(this))
     }
 
-    addTier(category, buildings) {
+    addCategory(category, buildings) {
         let buildingsSelector = document.getElementById('buildings')
 
         let openCategory = document.createElement('button')
@@ -35,21 +42,19 @@ module.exports = class View {
 
     #addBuilding(categoryContent, building) {
         let container = document.createElement('a')
-        let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-        svg.setAttribute('width', building.width)
-        svg.setAttribute('height', building.height)
+        
 
-        let buildingBoundes = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
-        buildingBoundes.setAttribute('width', building.width)
-        buildingBoundes.setAttribute('height', building.height)
-        buildingBoundes.setAttribute('fill', '#FFFFFF')
+        let buildingBounds = document.createElement('div')
+        buildingBounds.style.width =  building.width * 10 - 2 + 'px'
+        buildingBounds.style.height =  building.length * 10 - 2 + 'px'
+        buildingBounds.setAttribute('draggable', true)
+        buildingBounds.addEventListener('dragstart', (event) => {this.#dragstartHandler(event, building, buildingBounds)})
 
         
         let label = document.createElement('label')
         label.innerText = building.name
 
-        svg.appendChild(buildingBoundes)
-        container.appendChild(svg)
+        container.appendChild(buildingBounds)
         container.appendChild(label)
         categoryContent.appendChild(container)
     }
@@ -58,5 +63,34 @@ module.exports = class View {
         event.srcElement.classList.toggle('opened')
         categoryContent.classList.toggle('opened')
 
+    }
+
+    #dragstartHandler(event, building, buildingBounds, create = true) {
+        this.#draggedObject = {}
+        this.#draggedObject.create = create
+        this.#draggedObject.building = building
+        this.#draggedObject.buildingBounds = buildingBounds
+        this.#draggedObject.offsetX = event.offsetX
+        this.#draggedObject.offsetY = event.offsetY
+    }
+
+    #dragoverHandler(event) {
+        event.preventDefault()
+    }
+
+    #dropHandler(event) {
+        let draggedObject = this.#draggedObject
+        this.#draggedObject = null
+
+        let x = (event.pageX - event.currentTarget.offsetLeft) - draggedObject.offsetX
+        let y = (event.pageY - event.currentTarget.offsetTop) - draggedObject.offsetY
+
+        let newBuildingBounds = draggedObject.create ? draggedObject.buildingBounds.cloneNode() : draggedObject.buildingBounds
+        newBuildingBounds.addEventListener('dragstart', (event) => {this.#dragstartHandler(event,  draggedObject.building, newBuildingBounds, false)})
+
+        newBuildingBounds.style.left = `${x}px`
+        newBuildingBounds.style.top = `${y}px`
+
+        this.#designer.appendChild(newBuildingBounds)
     }
 }
