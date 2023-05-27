@@ -15,6 +15,9 @@ module.exports = class View {
         this.#designer = document.getElementById('designer')
         this.#designer.addEventListener('drop',  this.#dropHandler.bind(this), true)
         this.#designer.addEventListener('dragover', this.#dragoverHandler.bind(this))
+        document.addEventListener('mouseup', () => {
+            BuildingView.stopCreatingConnection()
+        })
     }
 
     addCategory(category, buildings) {
@@ -76,8 +79,8 @@ module.exports = class View {
 
         let newBuildingBounds = buildingView.buildingBounds ?? buildingView.createHTML()
 
-        newBuildingBounds.style.left = `${x}px`
-        newBuildingBounds.style.top = `${y}px`
+        buildingView.positionX = x
+        buildingView.positionY = y
 
         this.#designer.appendChild(newBuildingBounds)
     }

@@ -98,9 +98,13 @@ h1 {
 
 .building {
     position: relative;
-    background-color: #FF8C00;
+    background-color: green;
     border-radius: 5px;
     border: 1px solid #EEE;
+}
+
+.building.selected {
+    border: 1px solid #FF8C00;
 }
 
 .building .interface {
