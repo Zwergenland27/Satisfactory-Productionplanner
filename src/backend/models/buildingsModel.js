@@ -26,8 +26,8 @@ module.exports = class BuildingsModel {
         //this.#logistics.push(new Building("LOGISTIC", 'logistics', 8, 10, [BuildingInterface.INPUT], [BuildingInterface.OUTPUT]))
 
         this.#manufacturers.push(Building.createBuilding(`${Building.MANUFACTURERS}.manufacturer`))
-        this.#smelters.push(Building.createBuilding(`${Building.MANUFACTURERS}.smelter`))
-        this.#miners.push(Building.createBuilding(`${Building.MANUFACTURERS}.miner`))
+        this.#smelters.push(Building.createBuilding(`${Building.SMELTERS}.smelter`))
+        this.#miners.push(Building.createBuilding(`${Building.MINERS}.miner`))
         //this.#fluidExtractors.push(new Building("FLUID", "fluid-extractors"))
     }
 
