@@ -52,37 +52,28 @@ module.exports = class BuildingView {
 
         let interfacePosition =  (this.#building.width * 10) / (inputs.length + 1)
         inputs.forEach(input => {
-            let buildingInterface = document.createElement('div')
-            buildingInterface.classList.add('interface')
-            buildingInterface.classList.add(input.connectionType)
-            buildingInterface.style.width = '8px'
-            buildingInterface.style.height = '8px'
-
-            buildingInterface.style.left = `${interfacePosition - 5}px`
-            buildingInterface.style.top = `-5px`
+            this.#buildingBounds.appendChild(this.#createInterface(input.connectionType, interfacePosition, 0))
             interfacePosition += this.#building.width * 10 / (inputs.length + 1)
-
-            this.#buildingBounds.appendChild(buildingInterface)
         })
 
         interfacePosition =  (this.#building.width * 10) / (outputs.length + 1)
         outputs.forEach(output => {
-            let buildingInterface = document.createElement('div')
-            buildingInterface.classList.add('interface')
-            buildingInterface.classList.add(output.connectionType)
-            buildingInterface.style.width = '8px'
-            buildingInterface.style.height = '8px'
-
-            buildingInterface.style.left = `${interfacePosition - 5}px`
-            buildingInterface.style.top = `${this.#building.length * 10 -2 - 5}px`
+            this.#buildingBounds.appendChild(this.#createInterface(output.connectionType, interfacePosition, this.#building.length * 10 - 2))
             interfacePosition += this.#building.width * 10 / (outputs.length + 1)
-
-            this.#buildingBounds.appendChild(buildingInterface)
         })
         return this.#buildingBounds
     }
 
-    #createInterface(buildingInterface, width, height, top = true) {
+    #createInterface(connectionType, xPos, yPos) {
+        let buildingInterfaceBounds = document.createElement('div')
+        buildingInterfaceBounds.classList.add('interface')
+        buildingInterfaceBounds.classList.add(connectionType)
+        buildingInterfaceBounds.style.width = '8px'
+        buildingInterfaceBounds.style.height = '8px'
 
+        buildingInterfaceBounds.style.left = `${xPos - 5}px`
+        buildingInterfaceBounds.style.top = `${yPos - 5}px`
+
+        return buildingInterfaceBounds
     }
 }
