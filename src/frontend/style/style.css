@@ -72,11 +72,6 @@ aside {
     border: 1px solid #444
 }
 
-.collapsible-item a div {
-    border-radius: 5px;
-    border: 1px solid #EEE
-}
-
 .collapsible-item a label {
     padding-top: 2px;
     text-align: center;
@@ -98,7 +93,25 @@ h1 {
 
 #designer div {
     position: absolute;
+    z-index: 1;
+}
+
+.building {
+    position: relative;
+    background-color: #FF8C00;
     border-radius: 5px;
     border: 1px solid #EEE;
-    z-index: 1;
+}
+
+.building .interface {
+    position: absolute;
+    border: 1px solid #EEE;
+}
+
+.building .interface.SOLID {
+    background-color: red;
+}
+
+.building .interface.FLUID {
+    background-color: aqua;
 }

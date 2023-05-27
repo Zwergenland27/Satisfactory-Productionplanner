@@ -1,3 +1,5 @@
+const BuildingView = require("./buildingView")
+
 module.exports = class BuildingsPresenter {
     #model
     #view
@@ -17,5 +19,14 @@ module.exports = class BuildingsPresenter {
             let buildings = this.#model.getBuildingsOfCategory(category)
             this.#view.addCategory(category, buildings)
         });
+    }
+
+    addOrGetBuilding(buildingId, id) {
+        let building = this.#model.getBuilding(parseInt(id))
+        
+        if(building != null) return building
+        building = new BuildingView(buildingId)
+        this.#model.addBuilding(building)
+        return building
     }
 }

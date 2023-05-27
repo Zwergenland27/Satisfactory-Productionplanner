@@ -10,12 +10,15 @@ module.exports = class BuildingsModel {
     #miners
     #fluidExtractors
 
+    #factoryBuildings
+
     constructor() {
         this.#logistics = new Array()
         this.#manufacturers = new Array()
         this.#smelters = new Array()
         this.#miners = new Array()
         this.#fluidExtractors = new Array()
+        this.#factoryBuildings = new Array()
         this.#loadBuildings()
     }
 
@@ -41,5 +44,20 @@ module.exports = class BuildingsModel {
             case Building.FLUID_EXTRACTORS: return this.#fluidExtractors;
             default: return null;
         }
+    }
+    
+    //TODO: NICHT buildingView übergeben, muss überarbeitet werden!
+    addBuilding(building) {
+        this.#factoryBuildings.push(building)
+    }
+
+    //TODO: NICHT buildingView übergeben, muss überarbeitet werden!
+    getBuilding(id) {
+        let returnBuilding = null
+        this.#factoryBuildings.forEach(building => {
+            if(building.id == id) returnBuilding = building
+        });
+
+        return returnBuilding
     }
 }
