@@ -3,6 +3,13 @@ const Receipe = require('./recipe')
 const Resource = require('./resource')
 
 module.exports = class Building {
+
+    static LOGISTICS = 'LOGISTICS'
+    static MANUFACTURERS = 'MANUFACTURERS'
+    static SMELTERS = 'SMELTERS'
+    static MINERS = 'MINERS'
+    static FLUID_EXTRACTORS = 'FLUID_EXTRACTORS'
+
     #name
     #category
     #width
@@ -48,6 +55,47 @@ module.exports = class Building {
         if(outputs.length > 0) this.#addOutputs(outputs)
     }
 
+    /**
+     * TODO: read objects from file
+     * @param {string} id Unique id of the building that has to be created
+     */
+    static createBuilding(id) {
+        let idParts = id.split('.')
+        switch(idParts[0].toUpperCase()) {
+            case Building.LOGISTICS: return Building.#createLogisticBuilding(iParts[1])
+            case Building.MANUFACTURERS: return Building.#createManufacturerBuilding(idParts[1])
+            case Building.SMELTERS: return Building.#createSmelterBuilding(idParts[1])
+            case Building.MINERS: return Building.#createMinerBuilding(idParts[1])
+            case Building.FLUID_EXTRACTORS: return Building.#createFluidExtractorBuilding(idParts[1])
+            default: return null
+        }
+
+    }
+
+    static getCategories() {
+        return new Array(Building.LOGISTICS, Building.MANUFACTURERS, Building.SMELTERS, Building.MINERS, Building.FLUID_EXTRACTORS)
+    }
+
+    static #createLogisticBuilding(name) {
+        return null
+    }
+
+    static #createManufacturerBuilding(name) {
+        return new Building(name, Building.MANUFACTURERS, 10, 15, [BuildingInterface.CONVEYOR, BuildingInterface.CONVEYOR], [BuildingInterface.CONVEYOR])
+    }
+
+    static #createSmelterBuilding(name) {
+        return new Building(name, Building.SMELTERS, 6, 9, [BuildingInterface.CONVEYOR], [BuildingInterface.CONVEYOR])
+    }
+
+    static #createMinerBuilding(name) {
+        return new Building(name, Building.MINERS, 6, 14, [], [BuildingInterface.CONVEYOR])
+    }
+
+    static #createFluidExtractorBuilding(name) {
+        return null
+    }
+
     #addInputs(inputs) {
         inputs.forEach(input => {
             let buildingInterface = new BuildingInterface(
@@ -89,7 +137,7 @@ module.exports = class Building {
      * @returns {String} Id of the building
      */
     getId() {
-        return `${this.#category}.${this.#name}`
+        return `${this.#category}.${this.#name}`.toLowerCase()
     }
 
     /**

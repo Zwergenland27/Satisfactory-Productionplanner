@@ -3,8 +3,6 @@ const BuildingInterface = require('./buildingInterface')
 const Resource = require('./resource')
 
 module.exports = class BuildingsModel {
-    
-    static #categories = new Array('logistics', 'manufacturers', 'smelters', 'miners', 'fluid-extractors')
 
     #logistics
     #manufacturers
@@ -24,23 +22,23 @@ module.exports = class BuildingsModel {
     #loadBuildings() {
         //this.#logistics.push(new Building("LOGISTIC", 'logistics', 8, 10, [BuildingInterface.INPUT], [BuildingInterface.OUTPUT]))
 
-        this.#manufacturers.push(new Building("Assembler", 'manufacturers', 10, 15, [BuildingInterface.CONVEYOR, BuildingInterface.CONVEYOR], [BuildingInterface.CONVEYOR]))
-        this.#smelters.push(new Building("Smelter", 'smelters', 6, 9, [BuildingInterface.CONVEYOR], [BuildingInterface.CONVEYOR]))
-        this.#miners.push(new Building("Miner Mk.1", "miners", 6, 14, [], [BuildingInterface.CONVEYOR]))
+        this.#manufacturers.push(Building.createBuilding(`${Building.MANUFACTURERS}.manufacturer`))
+        this.#smelters.push(Building.createBuilding(`${Building.MANUFACTURERS}.smelter`))
+        this.#miners.push(Building.createBuilding(`${Building.MANUFACTURERS}.miner`))
         //this.#fluidExtractors.push(new Building("FLUID", "fluid-extractors"))
     }
 
     getCategories() {
-        return BuildingsModel.#categories
+        return Building.getCategories()
     }
 
     getBuildingsOfCategory(category) {
         switch(category){
-            case 'logistics': return this.#logistics;
-            case 'manufacturers': return this.#manufacturers;
-            case 'smelters': return this.#smelters;
-            case 'miners': return this.#miners;
-            case 'fluid-extractors': return this.#fluidExtractors;
+            case Building.LOGISTICS: return this.#logistics;
+            case Building.MANUFACTURERS: return this.#manufacturers;
+            case Building.SMELTERS: return this.#smelters;
+            case Building.MINERS: return this.#miners;
+            case Building.FLUID_EXTRACTORS: return this.#fluidExtractors;
             default: return null;
         }
     }
