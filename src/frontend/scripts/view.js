@@ -44,7 +44,6 @@ module.exports = class View {
             container.appendChild(buildingView.createHTML())
             container.appendChild(label)
             categoryContent.appendChild(container)
-            //this.#addBuilding(categoryContent, building)
         });
 
         buildingsSelector.appendChild(openCategory)
@@ -52,71 +51,10 @@ module.exports = class View {
 
     }
 
-    #addBuilding(categoryContent, building) {
-        let inputs = building.getInputs()
-        let outputs = building.getOutputs()
-
-        let container = document.createElement('a')
-
-        let buildingBounds = document.createElement('div')
-        buildingBounds.classList.add('building')
-        buildingBounds.style.width =  building.width * 10 - 2 + 'px'
-        buildingBounds.style.height =  building.length * 10 - 2 + 'px'
-        buildingBounds.setAttribute('draggable', true)
-        buildingBounds.addEventListener('dragstart', (event) => {this.#dragstartHandler(event, building, buildingBounds)})
-
-        let interfacePosition =  (building.width * 10) / (inputs.length + 1)
-        inputs.forEach(input => {
-            let buildingInterface = document.createElement('div')
-            buildingInterface.classList.add('interface')
-            buildingInterface.classList.add(input.connectionType)
-            buildingInterface.style.width = '8px'
-            buildingInterface.style.height = '8px'
-
-            buildingInterface.style.left = `${interfacePosition - 5}px`
-            buildingInterface.style.top = `-5px`
-            interfacePosition += building.width * 10 / (inputs.length + 1)
-
-            buildingBounds.appendChild(buildingInterface)
-        })
-
-        interfacePosition =  (building.width * 10) / (outputs.length + 1)
-        outputs.forEach(output => {
-            let buildingInterface = document.createElement('div')
-            buildingInterface.classList.add('interface')
-            buildingInterface.classList.add(output.connectionType)
-            buildingInterface.style.width = '8px'
-            buildingInterface.style.height = '8px'
-
-            buildingInterface.style.left = `${interfacePosition - 5}px`
-            buildingInterface.style.top = `${building.length * 10 -2 - 5}px`
-            interfacePosition += building.width * 10 / (outputs.length + 1)
-
-            buildingBounds.appendChild(buildingInterface)
-        })
-
-        
-        let label = document.createElement('label')
-        label.innerText = building.name
-
-        container.appendChild(buildingBounds)
-        container.appendChild(label)
-        categoryContent.appendChild(container)
-    }
-
     #openTierBuildingsList(event, categoryContent) {
         event.srcElement.classList.toggle('opened')
         categoryContent.classList.toggle('opened')
 
-    }
-
-    #dragstartHandler(event, building, buildingBounds, create = true) {
-        this.#draggedObject = {}
-        this.#draggedObject.create = create
-        this.#draggedObject.building = building
-        this.#draggedObject.buildingBounds = buildingBounds
-        this.#draggedObject.offsetX = event.offsetX
-        this.#draggedObject.offsetY = event.offsetY
     }
 
     #dragoverHandler(event) {
