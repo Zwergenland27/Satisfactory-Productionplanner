@@ -99,7 +99,7 @@ module.exports = class Building {
     getOutputs() {
         let outputs = new Array()
         this.#interfaces.forEach(buildingInterface => {
-            if(buildingInterface.connectionType == BuildingInterface.OUTPUT) outputs.push(buildingInterface)
+            if(buildingInterface.direction == BuildingInterface.OUTPUT) outputs.push(buildingInterface)
         })
         return outputs
     }
@@ -111,7 +111,7 @@ module.exports = class Building {
     getInputs() {
         let inputs = new Array()
         this.#interfaces.forEach(buildingInterface => {
-            if(buildingInterface.connectionType == BuildingInterface.INPUT) inputs.push(buildingInterface)
+            if(buildingInterface.direction == BuildingInterface.INPUT) inputs.push(buildingInterface)
         })
         return inputs
     }
