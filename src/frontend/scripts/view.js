@@ -18,6 +18,11 @@ module.exports = class View {
         document.addEventListener('mouseup', () => {
             BuildingView.stopCreatingConnection()
         })
+        document.addEventListener('keydown', (event) => {
+            BuildingView.currentlySelected.forEach(selectedBuildingView => {
+                selectedBuildingView.keyPress(event)
+            })
+        })
     }
 
     addCategory(category, buildings) {
@@ -39,7 +44,7 @@ module.exports = class View {
         buildings.forEach(building => {
             let container = document.createElement('a')
 
-            let buildingView = new BuildingView(building.getId())
+            let buildingView = new BuildingView(building.getId(), this.#buildingsPresenter, true)
             
             let label = document.createElement('label')
             label.innerText = building.name

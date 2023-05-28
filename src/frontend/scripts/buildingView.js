@@ -2,23 +2,25 @@ const Building = require("../../backend/models/building")
 
 module.exports = class BuildingView {
 
-    static #lastId = 0
     static #creatingConnection
+    static #currentlySelected
     
-    #id
     #building
+    #buildingsPresenter
 
     #buildingBounds
+    #disableEvents
     #positionX
     #positionY
     #rotation
 
-    constructor(buildingId) {
+    constructor(buildingId, buildingsPresenter, disableEvents = false) {
         this.#building = Building.createBuilding(buildingId)
+        this.#buildingsPresenter = buildingsPresenter
         this.#rotation = 0
+        this.#disableEvents = disableEvents
         BuildingView.#creatingConnection = false
-        this.#id = BuildingView.#lastId
-        BuildingView.#lastId++
+        BuildingView.#currentlySelected = new Array()
     }
 
     set positionX(x) {
@@ -37,20 +39,37 @@ module.exports = class BuildingView {
         this.#buildingBounds.style.top = `${this.#positionY}px`
     }
 
-    get id() {
-        return this.#id
+    get building() {
+        return this.#building
     }
 
     get buildingBounds() {
         return this.#buildingBounds
     }
 
-    rotate(angle) {
+    #rotate(angle) {
+        this.#rotation += angle
+        while(this.#rotation >= 360) {
+            this.#rotation -= 360
+        }
+        while(this.#rotation < 0) {
+            this.#rotation += 360
+        }
 
+        this.#buildingBounds.style.transform = `rotate(${this.#rotation}deg)`
+    }
+
+    #delete() {
+        this.#buildingsPresenter.removeBuildingView(this)
+        this.#buildingBounds.remove()
     }
 
     static stopCreatingConnection() {
         BuildingView.#creatingConnection = false
+    }
+
+    static get currentlySelected() {
+        return this.#currentlySelected
     }
 
     createHTML() {
@@ -68,12 +87,19 @@ module.exports = class BuildingView {
                 event.preventDefault()
                 return
             }
-            event.dataTransfer.setData('text/plain', `${this.#id};${this.#building.getId()};${event.offsetX};${event.offsetY}`)
+            event.dataTransfer.setData('text/plain', `${this.#building.id};${this.#building.getId()};${event.offsetX};${event.offsetY}`)
         })
         this.#buildingBounds.addEventListener('click', () => {
+            if(this.#disableEvents) return
             this.#buildingBounds.classList.toggle('selected')
+            if(this.#buildingBounds.classList.contains('selected')) {
+                BuildingView.#currentlySelected.push(this)
+            }else {
+                BuildingView.#currentlySelected.splice(BuildingView.#currentlySelected.indexOf(this), 1)
+            }
         })
         this.#buildingBounds.addEventListener('mousedown', (event) => {
+            if(this.#disableEvents) return
             if(!event.target.classList.contains('interface')) return;
             BuildingView.#creatingConnection = true
         })
@@ -90,6 +116,14 @@ module.exports = class BuildingView {
             interfacePosition += this.#building.width * 10 / (outputs.length + 1)
         })
         return this.#buildingBounds
+    }
+
+    keyPress(event) {
+        switch(event.key) {
+            case 'r': this.#rotate(90); break;
+            case 'R' : this.#rotate(45); break;
+            case 'Delete': this.#delete(); break;
+        }
     }
 
     #createInterface(connectionType, xPos, yPos) {
