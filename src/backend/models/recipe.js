@@ -1,6 +1,6 @@
 const Resource = require('./resource')
 
-module.exports = class Receipe {
+module.exports = class Recipe {
     #ingredients
     #products
     
@@ -32,10 +32,10 @@ module.exports = class Receipe {
      * @param {Number} quantity 
      */
     addProduct(resource, quantity) {
-        if(!resource.typeof(Resource))  throw new Error('Invalid argument')
+        if(!resource instanceof Resource)  throw new Error('Invalid argument')
 
-        if(!quantity.typeof(Number))    throw new Error('Invalid argument')
-        if(quantity <= 0)               throw new Error('Quantity must be larger than 0')
+        if(typeof quantity !== 'number')   throw new Error('Invalid argument')
+        if(quantity <= 0)                  throw new Error('Quantity must be larger than 0')
 
         this.#products.push({
             resource: resource,

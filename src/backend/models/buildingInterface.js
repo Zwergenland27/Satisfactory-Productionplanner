@@ -31,7 +31,7 @@ module.exports = class BuildingInterface {
      * @param {Number} quantity 
      */
     setResource(resource, quantity) {
-        if(typeof resource !== 'resource')          throw new Error('Invalid argument')
+        if(!resource instanceof Resource)          throw new Error('Invalid argument')
         if(resource.type != this.#connectionType)   throw new Error('Invalid resource type')
 
         if(typeof quantity !== 'number')            throw new Error('Invalid argument')

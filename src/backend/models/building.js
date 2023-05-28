@@ -1,6 +1,5 @@
 const BuildingInterface = require('./buildingInterface')
-const Receipe = require('./recipe')
-const Resource = require('./resource')
+const Recipe = require('./recipe')
 
 module.exports = class Building {
 
@@ -10,6 +9,9 @@ module.exports = class Building {
     static MINERS = 'MINERS'
     static FLUID_EXTRACTORS = 'FLUID_EXTRACTORS'
 
+    static #lastId = 0
+
+    #id
     #name
     #category
     #width
@@ -53,11 +55,15 @@ module.exports = class Building {
         this.#interfaces = new Array()
         if(inputs.length > 0) this.#addInputs(inputs)
         if(outputs.length > 0) this.#addOutputs(outputs)
+        
+        this.#id = Building.#lastId
+        Building.#lastId++
     }
 
     /**
      * TODO: read objects from file
-     * @param {string} id Unique id of the building that has to be created
+     * @param {String} id Unique id of the building that has to be created
+     * @return {Building}
      */
     static createBuilding(id) {
         let idParts = id.split('.')
@@ -116,6 +122,10 @@ module.exports = class Building {
         });
     }
 
+    get id() {
+        return this.#id
+    }
+
     get name() {
         return this.#name
     }
@@ -165,7 +175,7 @@ module.exports = class Building {
     }
 
     set recipe(recipe) {
-        if(!recipe.typeof(Receipe)) throw new Error('Invalid argument')
+        if(!recipe instanceof Recipe) throw new Error('Invalid argument')
 
         this.#recipe = recipe
 
