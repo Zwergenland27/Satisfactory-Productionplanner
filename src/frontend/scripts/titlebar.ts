@@ -20,7 +20,7 @@ export class Titlebar {
         this.createHandler()
     }
 
-    private createControls(controls: HTMLElement) {
+    private createControls(controls: HTMLElement): void {
         this.minimizeWindow = document.createElement('span')
         this.minimizeWindow.id = 'window-minimize'
         this.minimizeWindow.innerHTML = '&#xE921;'
@@ -43,21 +43,21 @@ export class Titlebar {
         controls.appendChild(this.closeWindow)
     }
 
-    private createMenu(menuDOM: HTMLElement) {
+    private createMenu(menuDOM: HTMLElement): void {
         let menu = new Menu(menuDOM)
     }
 
-    private create() {
+    private create(): void {
         let nav: HTMLElement = document.getElementById('titlebar')!
 
-        let menu = document.createElement('div')
+        let menu: HTMLElement = document.createElement('div')
         menu.id = 'menu'
         this.createMenu(menu)
         
-        let title = document.createElement('span')
+        let title: HTMLElement = document.createElement('span')
         title.innerText = document.querySelector('title')!.innerText
 
-        let controls = document.createElement('div')
+        let controls: HTMLElement = document.createElement('div')
         controls.classList.add("controls")
         this.createControls(controls)
 
@@ -66,7 +66,7 @@ export class Titlebar {
         nav.appendChild(controls)
     }
 
-    private createHandler() {
+    private createHandler(): void {
         this.minimizeWindow.addEventListener('click', this.controlHandler.bind(this), false)
         this.maximizeWindow.addEventListener('click', this.controlHandler.bind(this), false)
         this.unmaximizeWindow.addEventListener('click', this.controlHandler.bind(this), false)
@@ -74,13 +74,11 @@ export class Titlebar {
         this.ipcRenderer.on('window-control', this.handlemaximize.bind(this))
     }
 
-    private controlHandler(event: MouseEvent) {
-        //TODO: add type here
-        let target: any = event.target
-        this.ipcRenderer.send("window-control", target.id)
+    private controlHandler(event: MouseEvent): void {
+        this.ipcRenderer.send("window-control", (event.target! as HTMLElement).id)
     }
 
-    private handlemaximize(event: IpcRendererEvent, type:string) {
+    private handlemaximize(event: IpcRendererEvent, type: string): void {
         switch(type){
             case 'window-maximized': this.maximizeWindow.hidden = true; this.unmaximizeWindow.hidden = false; break;
             case 'window-unmaximized': this.maximizeWindow.hidden = false; this.unmaximizeWindow.hidden = true; break;
@@ -88,7 +86,7 @@ export class Titlebar {
     }
 
     //has to be executed before new titlebar object created
-    static initialize(window: BrowserWindow) {
+    static initialize(window: BrowserWindow): void {
         window.on('unmaximize', () => {
             window.webContents.send('window-control', 'window-unmaximized')
           })

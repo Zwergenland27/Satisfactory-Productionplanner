@@ -1,11 +1,10 @@
 import { app, BrowserWindow, globalShortcut } from "electron"
 import { Titlebar } from "../frontend/scripts/titlebar"
-
-const path = require('path')
+import path from "path"
 const frontend = "./src/frontend"
 
-function createWindow () {
-  const win = new BrowserWindow({
+function createWindow (): void {
+  const win : BrowserWindow = new BrowserWindow({
     minWidth: 800,
     minHeight: 600,
     width: 800,

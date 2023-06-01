@@ -35,7 +35,8 @@ export class Menu {
         this.createMenu(template)
     }
 
-    private createMenu(template: any[]) {
+    //TODO: better clas for template (dont use any?)
+    private createMenu(template: any[]): void {
         template.forEach(mainMenu => {
             let container = document.createElement('div')
 
@@ -73,7 +74,7 @@ export class Menu {
         })
     }
 
-    private createSubMenu(menuItems: any[], submenuBox: HTMLElement) {
+    private createSubMenu(menuItems: any[], submenuBox: HTMLElement): void {
         if(menuItems == null) return;
         menuItems.forEach(menu => {
             let submenuItem = document.createElement('span')
