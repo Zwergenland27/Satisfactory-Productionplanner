@@ -22,18 +22,20 @@ const menuTemplate = [
     }
 ]
 
-module.exports = class Menu {
+export class Menu {
 
-    #menuDOM
-    #visible = false
-    #oldDialog
+    private menuDOM: HTMLElement
+    private visible: boolean
+    private oldDialog: HTMLElement
 
-    constructor(menuDOM, template = menuTemplate) {
-        this.#menuDOM = menuDOM
-        this.#createMenu(template)
+    constructor(menuDOM: HTMLElement, template = menuTemplate) {
+        this.menuDOM = menuDOM
+        this.visible = false
+        this.oldDialog = null!
+        this.createMenu(template)
     }
 
-    #createMenu(template) {
+    private createMenu(template: any[]) {
         template.forEach(mainMenu => {
             let container = document.createElement('div')
 
@@ -44,42 +46,39 @@ module.exports = class Menu {
             let submenuBox = document.createElement('dialog')
             submenuBox.classList.add('hidden')
             container.appendChild(submenuBox)
-            this.#menuDOM.appendChild(container)
+            this.menuDOM.appendChild(container)
 
             mainItem.addEventListener('click', () => {
-                if(this.#visible) {
-                   this.#visible = false
+                if(this.visible) {
+                   this.visible = false
                    submenuBox.classList.add('hidden')
                 }
                 else{
-                    this.#visible = true
+                    this.visible = true
                     submenuBox.classList.remove('hidden')
-                    this.#oldDialog = submenuBox
+                    this.oldDialog = submenuBox
                 }
             });
 
             mainItem.addEventListener('mouseenter', () => {
-                if(!this.#visible) return
-                if(this.#oldDialog != null){
-                    this.#oldDialog.classList.add('hidden')
+                if(!this.visible) return
+                if(this.oldDialog != null){
+                    this.oldDialog.classList.add('hidden')
                 }
-                this.#oldDialog = submenuBox
+                this.oldDialog = submenuBox
                 submenuBox.classList.remove('hidden')
             })
 
-            this.#createSubMenu(mainMenu.submenu, submenuBox)
+            this.createSubMenu(mainMenu.submenu, submenuBox)
         })
     }
 
-    #createSubMenu(menuItems, submenuBox) {
+    private createSubMenu(menuItems: any[], submenuBox: HTMLElement) {
         if(menuItems == null) return;
         menuItems.forEach(menu => {
             let submenuItem = document.createElement('span')
             submenuItem.textContent = menu.role
             submenuBox.appendChild(submenuItem)
         })
-    }
-    addHandler(menuItem, handlerFunction) {
-
     }
 }

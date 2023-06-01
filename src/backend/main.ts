@@ -1,5 +1,5 @@
-const { app, BrowserWindow, globalShortcut } = require('electron')
-const Titlebar = require("../frontend/scripts/titlebar")
+import { app, BrowserWindow, globalShortcut } from "electron"
+import { Titlebar } from "../frontend/scripts/titlebar"
 
 const path = require('path')
 const frontend = "./src/frontend"

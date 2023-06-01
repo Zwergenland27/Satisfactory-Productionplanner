@@ -2,13 +2,15 @@
   "name": "satisplanner",
   "version": "1.0.0",
   "description": "a satisfactory production line planner tool",
-  "main": "./src/backend/main.js",
-  "dependencies": {},
+  "main": "./dist/backend/main.js",
   "devDependencies": {
-    "electron": "^24.3.1"
+    "@types/electron": "^1.6.10",
+    "electron": "^24.3.1",
+    "typescript": "^5.0.4"
   },
   "scripts": {
-    "start": "electron .",
+    "build": "tsc",
+    "start": "npm run build && electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
