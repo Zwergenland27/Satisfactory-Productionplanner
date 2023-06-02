@@ -6,9 +6,12 @@ export class Resource {
         private type
 
         constructor(name: string, type: string) {
+            name = name.trim();
+            if(name.length == 0) throw new Error("Invalid name");
             this.name = name
 
-            if(type != Resource.SOLID && type != Resource.FLUID) throw new Error("Invalid resource type")
+            type = type.trim();
+            if(type != Resource.SOLID && type != Resource.FLUID) throw new Error("Invalid resource type");
             this.type = type
         }
 
