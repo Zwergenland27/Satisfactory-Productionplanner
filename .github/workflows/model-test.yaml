@@ -1,7 +1,7 @@
 name: Unit Tests for model classes
 
-on:
-  push:
+  on:
+    push:
   jobs:
     test:
       runs-on: ubuntu-latest
