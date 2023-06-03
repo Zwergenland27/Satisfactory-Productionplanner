@@ -5,6 +5,7 @@ export class RecipeResource {
     private quantity: number;
 
     constructor(resource: Resource, quantity: number) {
+        //test
         //if(quantity <= 0) throw new Error("Quantity must be larger than 0");
         this.resource = resource;
         this.quantity = quantity;
