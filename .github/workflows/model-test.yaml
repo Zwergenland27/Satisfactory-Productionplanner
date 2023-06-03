@@ -3,11 +3,8 @@ name: Unit Tests for model classes
 on:
   push:
     branches: [ main ]
-<<<<<<< HEAD
-=======
     paths:
     - "src/backend/models/**"
->>>>>>> 3c616ae6098146f1b0dd48706949d5abc7718521
 
 jobs:
   test:
