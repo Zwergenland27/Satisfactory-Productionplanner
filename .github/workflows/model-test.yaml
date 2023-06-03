@@ -1,0 +1,21 @@
+name: Unit Tests for model classes
+
+on:
+  push:
+  jobs:
+    test:
+      runs-on: ubuntu-latest
+      steps:
+      #step 1 - clone project
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      
+      #step 2 - provide nodejs
+      - name: "Set up nodejs"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      
+      #step 3 - run test
+      - run: npm ci
+      - run: npm test 
