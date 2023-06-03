@@ -1,7 +1,7 @@
 import { Resource } from "../src/backend/models/resource";
 
 describe("Tests for Resource class", () => {
-    test("empty name", () => {
+    test("empty name throws error", () => {
         expect(() => new Resource("", "SOLID")).toThrow("Invalid name")
         expect(() => new Resource("   ", "SOLID")).toThrow("Invalid name")
     })
@@ -19,7 +19,7 @@ describe("Tests for Resource class", () => {
         expect(resource.getName()).toBe("r 2");
     })
 
-    test("invalid type", () => {
+    test("invalid type throws error", () => {
         expect(() => new Resource("r1", "")).toThrow("Invalid resource type");
         expect(() => new Resource("r1", "   ")).toThrow("Invalid resource type");
         expect(() => new Resource("r2", "hans")).toThrow("Invalid resource type");
