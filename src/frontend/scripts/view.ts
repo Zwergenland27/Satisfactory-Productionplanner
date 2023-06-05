@@ -1,4 +1,4 @@
-import { Building } from "../../backend/models/building"
+import { Building } from "../../satisfactory/building"
 import { BuildingView } from "./buildingView"
 import { BuildingsPresenter } from "./buildingsPresenter"
 

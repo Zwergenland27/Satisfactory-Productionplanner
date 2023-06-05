@@ -35,14 +35,14 @@ export class Recipe {
     }
 
     addProduct(resource: Resource, quantity: number): void {let product = new RecipeResource(resource, quantity);
-        this.products.push(product)
+        this.products.push(product);
     }
 
     getIngredients() {
-        return this.ingredients
+        return this.ingredients;
     }
 
     getProducts() {
-        return this.products
+        return this.products;
     }
 }

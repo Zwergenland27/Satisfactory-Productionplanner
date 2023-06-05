@@ -2,7 +2,7 @@
   "name": "satisplanner",
   "version": "1.0.0",
   "description": "a satisfactory production line planner tool",
-  "main": "./dist/backend/main.js",
+  "main": "./dist/src/backend/main.js",
   "devDependencies": {
     "@types/electron": "^1.6.10",
     "@types/jest": "^29.5.2",

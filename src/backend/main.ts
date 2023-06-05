@@ -12,17 +12,17 @@ function createWindow (): void {
     frame: false,
     webPreferences: {
       nodeIntegration: true,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, "preload.js")
     }
-  })
+  });
 
-  Titlebar.initialize(win)
+  Titlebar.initialize(win);
 
-  win.loadFile(path.join(frontend, 'index.html'))
+  win.loadFile(path.join(frontend, "index.html"));
 
-  win.webContents.openDevTools()
+  win.webContents.openDevTools();
 
-  globalShortcut.register('f5', () => {
+  globalShortcut.register("f5", () => {
     win.reload();
   })
 }
@@ -30,16 +30,16 @@ function createWindow (): void {
 app.whenReady().then(() => {
   createWindow()
 
-  app.on('activate', () => {
+  app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
+      createWindow();
     }
   })
 })
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-    globalShortcut.unregisterAll()
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+    globalShortcut.unregisterAll();
   }
 })

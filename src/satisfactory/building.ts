@@ -1,5 +1,13 @@
-import { BuildingInterface } from "./buildingInterface"
+import { BuildingInterface, ConnectionType, InterfaceDirection } from "./buildingInterface"
 import { Recipe } from "./recipe"
+
+export enum BuildingCategory {
+    LOGISTICS,
+    MANUFACTURERS,
+    SMELTERS,
+    MINERS,
+    FLUID_EXTRACTORS
+}
 
 export class Building {
 
@@ -19,7 +27,7 @@ export class Building {
     private interfaces: BuildingInterface[]
     private recipe: Recipe
 
-    constructor(name: string, category: string, width: number, length: number, inputs: string[], outputs: string[]) {
+    constructor(name: string, category: string, width: number, length: number, inputs: ConnectionType[], outputs: ConnectionType[]) {
         if(width <= 0)                  throw new Error('Building width must be greater than 0')
         if(length <= 0)                 throw new Error('Building length must be greater than 0')
 
@@ -60,35 +68,35 @@ export class Building {
     }
 
     private static createManufacturerBuilding(name: string): Building {
-        return new Building(name, Building.MANUFACTURERS, 10, 15, [BuildingInterface.CONVEYOR, BuildingInterface.CONVEYOR], [BuildingInterface.CONVEYOR])
+        return new Building(name, Building.MANUFACTURERS, 10, 15, [ConnectionType.CONVEYOR, ConnectionType.CONVEYOR], [ConnectionType.CONVEYOR])
     }
 
     private static createSmelterBuilding(name: string): Building {
-        return new Building(name, Building.SMELTERS, 6, 9, [BuildingInterface.CONVEYOR], [BuildingInterface.CONVEYOR])
+        return new Building(name, Building.SMELTERS, 6, 9, [ConnectionType.CONVEYOR], [ConnectionType.CONVEYOR])
     }
 
     private static createMinerBuilding(name: string): Building {
-        return new Building(name, Building.MINERS, 6, 14, [], [BuildingInterface.CONVEYOR])
+        return new Building(name, Building.MINERS, 6, 14, [], [ConnectionType.CONVEYOR])
     }
 
     private static createFluidExtractorBuilding(name: string): Building {
         return null!
     }
 
-    private addInputs(inputs: string[]): void {
+    private addInputs(inputs: ConnectionType[]): void {
         inputs.forEach(input => {
             let buildingInterface = new BuildingInterface(
-                BuildingInterface.INPUT,
+                InterfaceDirection.INPUT,
                 input
             )
             this.interfaces.push(buildingInterface) 
         });
     }
 
-    private addOutputs(outputs: string[]): void {
+    private addOutputs(outputs: ConnectionType[]): void {
         outputs.forEach(output => {
             let buildingInterface = new BuildingInterface(
-                BuildingInterface.OUTPUT,
+                InterfaceDirection.OUTPUT,
                 output
             )
             this.interfaces.push(buildingInterface) 
@@ -123,7 +131,7 @@ export class Building {
     getOutputs(): BuildingInterface[] {
         let outputs = new Array()
         this.interfaces.forEach(buildingInterface => {
-            if(buildingInterface.getDirection() == BuildingInterface.OUTPUT) outputs.push(buildingInterface)
+            if(buildingInterface.getDirection() == InterfaceDirection.OUTPUT) outputs.push(buildingInterface)
         })
         return outputs
     }
@@ -131,7 +139,7 @@ export class Building {
     getInputs(): BuildingInterface[] {
         let inputs = new Array()
         this.interfaces.forEach(buildingInterface => {
-            if(buildingInterface.getDirection() == BuildingInterface.INPUT) inputs.push(buildingInterface)
+            if(buildingInterface.getDirection() == InterfaceDirection.INPUT) inputs.push(buildingInterface)
         })
         return inputs
     }

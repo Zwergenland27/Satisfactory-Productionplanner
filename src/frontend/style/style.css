@@ -112,10 +112,10 @@ h1 {
     border: 1px solid #EEE;
 }
 
-.building .interface.SOLID {
+.building .interface.type-0 {
     background-color: red;
 }
 
-.building .interface.FLUID {
+.building .interface.type-1 {
     background-color: aqua;
 }
