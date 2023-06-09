@@ -1,0 +1,55 @@
+{
+    "buildings": [
+        {
+            "name": "Manufacturer",
+            "id": "manufacturer",
+            "category": "MANUFACTURERS",
+            "width": 10,
+            "length": 15,
+            "interfaces": [
+                {
+                    "direction": "INPUT",
+                    "connectionType": "CONVEYOR"
+                },
+                {
+                    "direction": "INPUT",
+                    "connectionType": "CONVEYOR"
+                },
+                {
+                    "direction": "OUTPUT",
+                    "connectionType": "CONVEYOR"
+                }
+            ]
+        },
+        {
+            "name": "Smelter",
+            "id": "smelter",
+            "category": "SMELTERS",
+            "width": 6,
+            "length": 9,
+            "interfaces": [
+                {
+                    "direction": "INPUT",
+                    "connectionType": "CONVEYOR"
+                },
+                {
+                    "direction": "OUTPUT",
+                    "connectionType": "CONVEYOR"
+                }
+            ]
+        },
+        {
+            "name": "Miner",
+            "id": "smelter",
+            "category": "MINERS",
+            "width": 6,
+            "length": 14,
+            "interfaces": [
+                {
+                    "direction": "OUTPUT",
+                    "connectionType": "CONVEYOR"
+                }
+            ]
+        }
+    ]
+}

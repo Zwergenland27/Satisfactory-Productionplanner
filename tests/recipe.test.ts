@@ -1,25 +1,25 @@
-import { Recipe, RecipeResource } from "../src/satisfactory/recipe"
-import { Resource, ResourceType } from "../src/satisfactory/resource";
+import { Recipe, RecipeItem } from "../src/satisfactory/recipe"
+import { Item, ItemType } from "../src/satisfactory/item";
 
 describe("Tests for RecipeResource class", () => {
     test("constructor setting resource", () => {
-        let resource: Resource = new Resource("r1", ResourceType.SOLID);
-        let recipeResource: RecipeResource = new RecipeResource(resource, 10);
+        let resource: Item = new Item("r1", ItemType.SOLID);
+        let recipeResource: RecipeItem = new RecipeItem(resource, 10);
         expect(recipeResource.getResource()).toBe(resource);
     })
 
     test("constructor setting quantity > 0", () => {
         let quantity = 15;
-        let recipeResource: RecipeResource = new RecipeResource(new Resource("r1", ResourceType.SOLID), quantity);
+        let recipeResource: RecipeItem = new RecipeItem(new Item("r1", ItemType.SOLID), quantity);
         expect(recipeResource.getQuantity()).toBe(quantity);
     })
 
     test("constructor setting quantity = 0 throws error", () => {
-        expect(() => new RecipeResource(new Resource("r1", ResourceType.SOLID), 0)).toThrow("Quantity must be larger than 0");
+        expect(() => new RecipeItem(new Item("r1", ItemType.SOLID), 0)).toThrow("Quantity must be larger than 0");
     })
 
     test("constructor setting quantity < 0 throws error", () => {
-        expect(() => new RecipeResource(new Resource("r1", ResourceType.SOLID), -3)).toThrow("Quantity must be larger than 0");
+        expect(() => new RecipeItem(new Item("r1", ItemType.SOLID), -3)).toThrow("Quantity must be larger than 0");
     })
 })
 
@@ -34,11 +34,11 @@ describe("Tests for Recipe class", () => {
     test("added ingredients will be pushed to ingredients array", () => {
         let recipe: Recipe = new Recipe();
 
-        let resource1: Resource = new Resource("r1", ResourceType.SOLID);
+        let resource1: Item = new Item("r1", ItemType.SOLID);
         let quantity1: number = 10;
         recipe.addIngredient(resource1, quantity1)
 
-        let resource2: Resource = new Resource("r2", ResourceType.SOLID);
+        let resource2: Item = new Item("r2", ItemType.SOLID);
         let quantity2: number = 10;
         recipe.addIngredient(resource2, quantity2)
 
@@ -52,11 +52,11 @@ describe("Tests for Recipe class", () => {
     test("added products will be pushed to products array", () => {
         let recipe: Recipe = new Recipe();
 
-        let resource1: Resource = new Resource("r1", ResourceType.SOLID);
+        let resource1: Item = new Item("r1", ItemType.SOLID);
         let quantity1: number = 10;
         recipe.addProduct(resource1, quantity1)
 
-        let resource2: Resource = new Resource("r2", ResourceType.SOLID);
+        let resource2: Item = new Item("r2", ItemType.SOLID);
         let quantity2: number = 10;
         recipe.addProduct(resource2, quantity2)
 

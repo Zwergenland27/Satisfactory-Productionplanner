@@ -112,10 +112,10 @@ h1 {
     border: 1px solid #EEE;
 }
 
-.building .interface.type-0 {
+.building .interface.CONVEYOR {
     background-color: red;
 }
 
-.building .interface.type-1 {
+.building .interface.PIPE {
     background-color: aqua;
 }

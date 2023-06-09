@@ -1,17 +1,17 @@
-export enum ResourceType {
-    SOLID,
-    FLUID
+export enum ItemType {
+    SOLID = "SOLID",
+    FLUID = "FLUID"
 }
-export class Resource {
+export class Item {
         private name
         private type
 
-        constructor(name: string, type: ResourceType) {
+        constructor(name: string, type: ItemType) {
             name = name.trim();
             if(name.length == 0) throw new Error("Invalid name");
             this.name = name;
 
-            if(type != ResourceType.SOLID && type != ResourceType.FLUID) throw new Error("Invalid resource type");
+            if(type != ItemType.SOLID && type != ItemType.FLUID) throw new Error("Invalid resource type");
             this.type = type;
         }
 
@@ -19,7 +19,7 @@ export class Resource {
             return this.name;
         }
 
-        getType(): ResourceType {
+        getType(): ItemType {
             return this.type;
         }
  }

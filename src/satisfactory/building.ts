@@ -1,33 +1,27 @@
-import { BuildingInterface, ConnectionType, InterfaceDirection } from "./buildingInterface"
-import { Recipe } from "./recipe"
+import { BuildingInterface, InterfaceConnectionType, InterfaceDirection } from "./buildingInterface";
+import { Recipe } from "./recipe";
 
 export enum BuildingCategory {
-    LOGISTICS,
-    MANUFACTURERS,
-    SMELTERS,
-    MINERS,
-    FLUID_EXTRACTORS
+    LOGISTICS = "LOGISTICS",
+    MANUFACTURERS = 'MANUFACTURERS',
+    SMELTERS = 'SMELTERS',
+    MINERS = 'MINERS',
+    FLUID_EXTRACTORS = 'FLUID_EXTRACTORS'
 }
 
 export class Building {
 
-    static LOGISTICS:string = 'LOGISTICS'
-    static MANUFACTURERS:string = 'MANUFACTURERS'
-    static SMELTERS:string = 'SMELTERS'
-    static MINERS:string = 'MINERS'
-    static FLUID_EXTRACTORS:string = 'FLUID_EXTRACTORS'
-
-    static #lastId: number = 0
+    static lastId: number = 0
 
     private id: number
     private name: string
-    private category: string
+    private category: BuildingCategory
     private width: number
     private length: number
     private interfaces: BuildingInterface[]
     private recipe: Recipe
 
-    constructor(name: string, category: string, width: number, length: number, inputs: ConnectionType[], outputs: ConnectionType[]) {
+    constructor(name: string, category: BuildingCategory, width: number, length: number, interfaces: BuildingInterface[]) {
         if(width <= 0)                  throw new Error('Building width must be greater than 0')
         if(length <= 0)                 throw new Error('Building length must be greater than 0')
 
@@ -36,71 +30,31 @@ export class Building {
         this.width = width
         this.length = length
 
-        this.interfaces = new Array()
-        if(inputs.length > 0) this.addInputs(inputs)
-        if(outputs.length > 0) this.addOutputs(outputs)
+        this.interfaces = interfaces;
         this.recipe = null!
         
-        this.id = Building.#lastId
-        Building.#lastId++
+        this.id = Building.lastId
+        Building.lastId++
 
     }
 
-    static createBuilding(id: string): Building {
-        let idParts = id.split('.')
-        switch(idParts[0].toUpperCase()) {
-            case Building.LOGISTICS: return Building.createLogisticBuilding(idParts[1])
-            case Building.MANUFACTURERS: return Building.createManufacturerBuilding(idParts[1])
-            case Building.SMELTERS: return Building.createSmelterBuilding(idParts[1])
-            case Building.MINERS: return Building.createMinerBuilding(idParts[1])
-            case Building.FLUID_EXTRACTORS: return Building.createFluidExtractorBuilding(idParts[1])
-            default: return null!
+    static getCategories(): BuildingCategory[] {
+        let categories = new Array();
+        for(var category in BuildingCategory) {
+            categories.push(category);
         }
-
+        return categories;
     }
 
-    static getCategories(): string[] {
-        return new Array(Building.LOGISTICS, Building.MANUFACTURERS, Building.SMELTERS, Building.MINERS, Building.FLUID_EXTRACTORS)
-    }
-
-    private static createLogisticBuilding(name: string): Building {
-        return null!
-    }
-
-    private static createManufacturerBuilding(name: string): Building {
-        return new Building(name, Building.MANUFACTURERS, 10, 15, [ConnectionType.CONVEYOR, ConnectionType.CONVEYOR], [ConnectionType.CONVEYOR])
-    }
-
-    private static createSmelterBuilding(name: string): Building {
-        return new Building(name, Building.SMELTERS, 6, 9, [ConnectionType.CONVEYOR], [ConnectionType.CONVEYOR])
-    }
-
-    private static createMinerBuilding(name: string): Building {
-        return new Building(name, Building.MINERS, 6, 14, [], [ConnectionType.CONVEYOR])
-    }
-
-    private static createFluidExtractorBuilding(name: string): Building {
-        return null!
-    }
-
-    private addInputs(inputs: ConnectionType[]): void {
-        inputs.forEach(input => {
-            let buildingInterface = new BuildingInterface(
-                InterfaceDirection.INPUT,
-                input
-            )
-            this.interfaces.push(buildingInterface) 
-        });
-    }
-
-    private addOutputs(outputs: ConnectionType[]): void {
-        outputs.forEach(output => {
-            let buildingInterface = new BuildingInterface(
-                InterfaceDirection.OUTPUT,
-                output
-            )
-            this.interfaces.push(buildingInterface) 
-        });
+    clone() : Building {
+        let clone = new Building(
+            this.name,
+            this.category,
+            this.width,
+            this.length,
+            this.interfaces
+        );
+        return clone;
     }
 
     getNumericId(): number {
@@ -119,7 +73,7 @@ export class Building {
         return this.length
     }
 
-    getCategory(): string {
+    getCategory(): BuildingCategory {
         return this.category
     }
 

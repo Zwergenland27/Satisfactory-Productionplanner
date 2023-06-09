@@ -1,16 +1,16 @@
-import { Resource } from "./resource"
+import { Item } from "./item"
 
-export class RecipeResource {
-    private resource: Resource;
+export class RecipeItem {
+    private resource: Item;
     private quantity: number;
 
-    constructor(resource: Resource, quantity: number) {
+    constructor(resource: Item, quantity: number) {
         if(quantity <= 0) throw new Error("Quantity must be larger than 0");
         this.resource = resource;
         this.quantity = quantity;
     }
 
-    getResource(): Resource {
+    getResource(): Item {
         return this.resource;
     }
 
@@ -21,20 +21,20 @@ export class RecipeResource {
 
 export class Recipe {
     
-    private ingredients: RecipeResource[];
-    private products: RecipeResource[];
+    private ingredients: RecipeItem[];
+    private products: RecipeItem[];
     
     constructor() {
         this.ingredients = new Array();
         this.products = new Array();
     }
 
-    addIngredient(resource: Resource, quantity: number): void {
-        let ingredient = new RecipeResource(resource, quantity);
+    addIngredient(resource: Item, quantity: number): void {
+        let ingredient = new RecipeItem(resource, quantity);
         this.ingredients.push(ingredient)
     }
 
-    addProduct(resource: Resource, quantity: number): void {let product = new RecipeResource(resource, quantity);
+    addProduct(resource: Item, quantity: number): void {let product = new RecipeItem(resource, quantity);
         this.products.push(product);
     }
 

@@ -1,5 +1,6 @@
+import { BuildingsLoader } from "../../backend/loader";
 import { Building } from "../../satisfactory/building"
-import { ConnectionType } from "../../satisfactory/buildingInterface"
+import { InterfaceConnectionType } from "../../satisfactory/buildingInterface"
 import { BuildingsPresenter } from "./buildingsPresenter"
 export class BuildingView {
 
@@ -16,7 +17,7 @@ export class BuildingView {
     private rotation: number;
 
     constructor(buildingId: string, buildingsPresenter: BuildingsPresenter, disableEvents:Boolean = false) {
-        this.building = Building.createBuilding(buildingId);
+        this.building = BuildingsLoader.getBuilding(buildingId);
         this.buildingsPresenter = buildingsPresenter;
         this.buildingBounds = null!;
         this.positionX = 0;
@@ -128,10 +129,10 @@ export class BuildingView {
         }
     }
 
-    private createInterface(connectionType: ConnectionType, xPos: number, yPos: number): HTMLElement {
+    private createInterface(connectionType: InterfaceConnectionType, xPos: number, yPos: number): HTMLElement {
         let buildingInterfaceBounds = document.createElement("div");
         buildingInterfaceBounds.classList.add("interface");
-        buildingInterfaceBounds.classList.add(`type-${connectionType}`);
+        buildingInterfaceBounds.classList.add(connectionType);
         buildingInterfaceBounds.style.width = "8px";
         buildingInterfaceBounds.style.height = "8px";
 
