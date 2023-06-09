@@ -36,10 +36,35 @@ export class Recipe {
     
     private ingredients: RecipePart[];
     private products: RecipePart[];
+    private allowedBuildings: string[];
     
     constructor() {
         this.ingredients = new Array();
         this.products = new Array();
+        this.allowedBuildings = new Array();
+    }
+
+    /**
+     * @description Add a building, in which this recipe can be used
+     * @param buildingId The building specific id
+     */
+    addAllowedBuilding(buildingId: string): void {
+        buildingId = buildingId.trim();
+        if(buildingId.length == 0) throw new Error("Invalid building id");
+        this.allowedBuildings.push(buildingId);
+    }
+
+    /**
+     * 
+     * @param buildingId The building specific id
+     * @returns true if the recipe can be used in the building, false otherwise
+     */
+    isAllowedInBuilding(buildingId: string): boolean {
+        let allowed = false;
+        this.allowedBuildings.forEach(allowedBuilding => {
+            if(allowedBuilding == buildingId) allowed = true;
+        })
+        return allowed;
     }
 
     /**
@@ -62,11 +87,19 @@ export class Recipe {
         this.products.push(product);
     }
 
-    getIngredients() {
+    /**
+     * 
+     * @returns Array of items (and their amount) needed for this recipe
+     */
+    getIngredients(): RecipePart[] {
         return this.ingredients;
     }
 
-    getProducts() {
+    /**
+     * 
+     * @returns Array of items (and their amount) produced by this recipe
+     */
+    getProducts(): RecipePart[] {
         return this.products;
     }
 }

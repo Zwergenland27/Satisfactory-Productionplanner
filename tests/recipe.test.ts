@@ -66,4 +66,29 @@ describe("Tests for Recipe class", () => {
         expect(recipe.getProducts()[1].getResource()).toBe(resource2);
         expect(recipe.getProducts()[1].getQuantity()).toBe(quantity2);
     })
+
+    test("addAllowdedBuilding buildingId empty throws error", () => {
+        let recipe: Recipe = new Recipe();
+        expect(() => recipe.addAllowedBuilding("")).toThrow("Invalid building id");
+        expect(() => recipe.addAllowedBuilding("  ")).toThrow("Invalid building id");
+        
+    })
+
+    test("addAllowdedBuilding added", () => {
+        let recipe: Recipe = new Recipe();
+        recipe.addAllowedBuilding("Building 1");
+        recipe.addAllowedBuilding("Building 2");
+        expect(recipe.isAllowedInBuilding("Building 1")).toBe(true);
+        expect(recipe.isAllowedInBuilding("Building 2")).toBe(true);
+        expect(recipe.isAllowedInBuilding("Building 3")).toBe(false);
+    })
+
+    test("addAllowdedBuilding remove unneccessary spaces on buildingId", () => {
+        let recipe: Recipe = new Recipe();
+        recipe.addAllowedBuilding(" Building");
+        recipe.addAllowedBuilding("  another Building   ");
+
+        expect(recipe.isAllowedInBuilding("Building")).toBe(true);
+        expect(recipe.isAllowedInBuilding("another Building")).toBe(true);
+    })
 })

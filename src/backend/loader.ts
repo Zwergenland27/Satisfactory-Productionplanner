@@ -64,6 +64,7 @@ export class BuildingsLoader {
 
         let building: Building = new Building(
             buildingTemplate.name,
+            buildingTemplate.id,
             this.getBuildingCategory(buildingTemplate.category),
             buildingTemplate.width,
             buildingTemplate.length,

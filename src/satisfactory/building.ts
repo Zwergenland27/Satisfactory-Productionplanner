@@ -13,6 +13,7 @@ export class Building {
 
     static lastNumericId: number = 0
 
+    private id: string
     private numericId: number
     private name: string
     private category: BuildingCategory
@@ -25,20 +26,25 @@ export class Building {
      * 
      * @param name The displayed name of the building (for example Miner Mk.1)
      * @param category The category in which the building is listed in the building menu in the game
+     * @param id The building unique id
      * @param width The width of the building bounds in meters
      * @param length The length of the building bounds in meters
      * @param interfaces The interfaces that the building has for conveyor belts and pipes
      */
-    constructor(name: string, category: BuildingCategory, width: number, length: number, interfaces: BuildingInterface[]) {
+    constructor(name: string, id: string, category: BuildingCategory, width: number, length: number, interfaces: BuildingInterface[]) {
         if(width <= 0)                  throw new Error('Building width must be greater than 0');
         if(length <= 0)                 throw new Error('Building length must be greater than 0');
 
         name = name.trim();
         if(name.length == 0)            throw new Error("Invalid building name");
 
+        id = id.trim();
+        if(id.length == 0)              throw new Error("Invalid building id");
+
         if(interfaces.length == 0)      throw new Error("Building must have at least one interface");
 
         this.name = name;
+        this.id = id;
         this.category = category
         this.width = width
         this.length = length
@@ -70,6 +76,7 @@ export class Building {
     clone() : Building {
         let clone = new Building(
             this.name,
+            this.id,
             this.category,
             this.width,
             this.length,
@@ -120,10 +127,10 @@ export class Building {
 
     /**
      * 
-     * @returns the building - unique id in the format category.name
+     * @returns the building unique id
      */
     getId(): string {
-        return `${this.category}.${this.name}`.toLowerCase()
+        return this.id;
     }
 
 
@@ -156,6 +163,7 @@ export class Building {
      * @param recipe the recipe that this building should use
      */
     setRecipe(recipe: Recipe): void {
+        if(!recipe.isAllowedInBuilding(this.id)) throw new Error("Recipe cannot be used in this building");
         this.recipe = recipe
 
         recipe.getIngredients().forEach(input => {

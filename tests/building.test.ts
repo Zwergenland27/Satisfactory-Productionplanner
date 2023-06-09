@@ -15,11 +15,12 @@ describe("Tests for Building class constructor", () => {
         inputs.push(new BuildingInterface(InterfaceDirection.INPUT, InterfaceConnectionType.PIPE));
         outputs.push(new BuildingInterface(InterfaceDirection.OUTPUT, InterfaceConnectionType.CONVEYOR));
 
-        building = new Building("Name", BuildingCategory.LOGISTICS, 10, 8, [...inputs, ... outputs]);
+        building = new Building("Name", "ID", BuildingCategory.LOGISTICS, 10, 8, [...inputs, ... outputs]);
     })
 
-    test("name, category, width, length are set in constructor", () => {
+    test("name, id, category, width, length are set in constructor", () => {
         expect(building.getName()).toBe("Name");
+        expect(building.getId()).toBe("ID");
         expect(building.getCategory()).toBe(BuildingCategory.LOGISTICS);
         expect(building.getWidth()).toBe(10);
         expect(building.getLength()).toBe(8);
@@ -38,42 +39,55 @@ describe("Tests for Building class constructor", () => {
     })
 
     test("empty name in constructor throws error", () => {
-        expect(() => new Building("", BuildingCategory.LOGISTICS, 10, 8, inputs)).toThrow("Invalid building name")
-        expect(() => new Building("   ", BuildingCategory.LOGISTICS, 10, 8, inputs)).toThrow("Invalid building name")
+        expect(() => new Building("", "ID", BuildingCategory.LOGISTICS, 10, 8, inputs)).toThrow("Invalid building name")
+        expect(() => new Building("   ", "ID",  BuildingCategory.LOGISTICS, 10, 8, inputs)).toThrow("Invalid building name")
     })
 
     test("remove unneccessary spaces on name in constructor", () => {
-        let building: Building = new Building(" Name ", BuildingCategory.LOGISTICS, 10, 8, inputs);
+        let building: Building = new Building(" Name ", "ID", BuildingCategory.LOGISTICS, 10, 8, inputs);
         expect(building.getName()).toBe("Name");
         
-        building = new Building(" Noch ein Namensteil ", BuildingCategory.LOGISTICS, 10, 8, inputs);
+        building = new Building(" Noch ein Namensteil ", "ID", BuildingCategory.LOGISTICS, 10, 8, inputs);
         expect(building.getName()).toBe("Noch ein Namensteil");
     })
 
+    test("empty id in constructor throws error", () => {
+        expect(() => new Building("Name", "", BuildingCategory.LOGISTICS, 10, 8, inputs)).toThrow("Invalid building id")
+        expect(() => new Building("Name", "  ",  BuildingCategory.LOGISTICS, 10, 8, inputs)).toThrow("Invalid building id")
+    })
+
+    test("remove unneccessary spaces on id in constructor", () => {
+        let building: Building = new Building("Name", " ID ", BuildingCategory.LOGISTICS, 10, 8, inputs);
+        expect(building.getId()).toBe("ID");
+        
+        building = new Building("Name", "    weiterer ID Teile    ", BuildingCategory.LOGISTICS, 10, 8, inputs);
+        expect(building.getId()).toBe("weiterer ID Teile");
+    })
+
     test("setting width = 0 in constructor throws error", () => {
-        expect(() => new Building("Name", BuildingCategory.LOGISTICS, 0, 8, inputs)).toThrow("Building width must be greater than 0");
+        expect(() => new Building("Name", "ID", BuildingCategory.LOGISTICS, 0, 8, inputs)).toThrow("Building width must be greater than 0");
     })
 
     test("setting width < 0 in constructor throws error", () => {
-        expect(() => new Building("Name", BuildingCategory.LOGISTICS, -4, 8, inputs)).toThrow("Building width must be greater than 0");
+        expect(() => new Building("Name", "ID", BuildingCategory.LOGISTICS, -4, 8, inputs)).toThrow("Building width must be greater than 0");
     })
 
     test("setting length = 0 in constructor throws error", () => {
-        expect(() => new Building("Name", BuildingCategory.LOGISTICS, 3, 0, inputs)).toThrow("Building length must be greater than 0");
+        expect(() => new Building("Name", "ID", BuildingCategory.LOGISTICS, 3, 0, inputs)).toThrow("Building length must be greater than 0");
     })
 
     test("setting length < 0 in constructor throws error", () => {
-        expect(() => new Building("Name", BuildingCategory.LOGISTICS, 3, -8, inputs)).toThrow("Building length must be greater than 0");
+        expect(() => new Building("Name", "ID", BuildingCategory.LOGISTICS, 3, -8, inputs)).toThrow("Building length must be greater than 0");
     })
 
     test("setting empty interfaces array in constructor throws error", () => {
         let emptyInterfaces: BuildingInterface[] = new Array();
-        expect(() => new Building("Name", BuildingCategory.LOGISTICS, 3, 8, emptyInterfaces)).toThrow("Building must have at least one interface");
+        expect(() => new Building("Name", "ID", BuildingCategory.LOGISTICS, 3, 8, emptyInterfaces)).toThrow("Building must have at least one interface");
     })
 
     test("numeric id is automatically incremented", () => {
-        let building1: Building = new Building("Name", BuildingCategory.LOGISTICS, 10, 8, inputs);
-        let building2: Building = new Building("Name", BuildingCategory.LOGISTICS, 10, 8, inputs);
+        let building1: Building = new Building("Name", "ID", BuildingCategory.LOGISTICS, 10, 8, inputs);
+        let building2: Building = new Building("Name", "ID", BuildingCategory.LOGISTICS, 10, 8, inputs);
         expect(building2.getNumericId()).toBe(building1.getNumericId() + 1);
     })
 })
@@ -91,11 +105,11 @@ describe("Tests for building class", () => {
         inputs.push(new BuildingInterface(InterfaceDirection.INPUT, InterfaceConnectionType.PIPE));
         outputs.push(new BuildingInterface(InterfaceDirection.OUTPUT, InterfaceConnectionType.CONVEYOR));
 
-        building = new Building("Name", BuildingCategory.LOGISTICS, 10, 8, [...inputs, ... outputs]);
+        building = new Building("Name", "ID", BuildingCategory.LOGISTICS, 10, 8, [...inputs, ... outputs]);
     })
 
     test("clone is exact copy of object, with new id", () => {
-        let originalBuilding: Building = new Building("Name", BuildingCategory.LOGISTICS, 10, 8, inputs);
+        let originalBuilding: Building = new Building("Name", "ID", BuildingCategory.LOGISTICS, 10, 8, inputs);
         let cloneBulding: Building = originalBuilding.clone();
 
         expect(cloneBulding.getName()).toBe(originalBuilding.getName());
