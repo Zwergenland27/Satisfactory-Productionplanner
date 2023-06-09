@@ -2,8 +2,8 @@ import { Item, ItemType } from "../src/satisfactory/item";
 
 describe("Tests for Resource class", () => {
     test("empty name throws error", () => {
-        expect(() => new Item("", ItemType.SOLID)).toThrow("Invalid name")
-        expect(() => new Item("   ", ItemType.SOLID)).toThrow("Invalid name")
+        expect(() => new Item("", ItemType.SOLID)).toThrow("Invalid item name")
+        expect(() => new Item("   ", ItemType.SOLID)).toThrow("Invalid item name")
     })
 
     test("name set", () => {

@@ -13,16 +13,15 @@ export class Item {
          */
         constructor(name: string, type: ItemType) {
             name = name.trim();
-            if(name.length == 0) throw new Error("Invalid name");
-            this.name = name;
+            if(name.length == 0) throw new Error("Invalid item name");
 
-            if(type != ItemType.SOLID && type != ItemType.FLUID) throw new Error("Invalid resource type");
+            this.name = name;
             this.type = type;
         }
 
         /**
          * 
-         * @returns The name of the item
+         * @returns the name of the item
          */
         getName(): string {
             return this.name;

@@ -1,14 +1,14 @@
 import { BuildingsLoader } from "../../backend/loader";
 import { Building } from "../../satisfactory/building"
 import { InterfaceConnectionType } from "../../satisfactory/buildingInterface"
-import { BuildingsPresenter } from "./buildingsPresenter"
+import { BuildingPresenter } from "./buildingPresenter"
 export class BuildingView {
 
     private static creatingConnection: Boolean;
     private static currentlySelected: BuildingView[];
     
     private building: Building;
-    private buildingsPresenter: BuildingsPresenter;
+    private buildingsPresenter: BuildingPresenter;
 
     private buildingBounds: HTMLElement;
     private disableEvents: Boolean;
@@ -16,7 +16,7 @@ export class BuildingView {
     private positionY: number;
     private rotation: number;
 
-    constructor(buildingId: string, buildingsPresenter: BuildingsPresenter, disableEvents:Boolean = false) {
+    constructor(buildingId: string, buildingsPresenter: BuildingPresenter, disableEvents:Boolean = false) {
         this.building = BuildingsLoader.getBuilding(buildingId);
         this.buildingsPresenter = buildingsPresenter;
         this.buildingBounds = null!;

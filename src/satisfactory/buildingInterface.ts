@@ -14,43 +14,62 @@ export class BuildingInterface {
 
     private direction: InterfaceDirection;
     private connectionType: InterfaceConnectionType;
-    private resource: Item;
-    private quantity: number;
+    private item: Item;
+    private storageAmount: number;
     
+    /**
+     * 
+     * @param direction Set whether the interface is an input or output
+     * @param connectionType Set whether the interface should be connected to a conveyo belt or a pipe.
+     */
     constructor(direction: InterfaceDirection, connectionType: InterfaceConnectionType) {
-        if(direction != InterfaceDirection.INPUT && direction != InterfaceDirection.OUTPUT)         throw new Error("Invalid interface direction");
         this.direction = direction;
-
-        if(connectionType != InterfaceConnectionType.CONVEYOR && connectionType != InterfaceConnectionType.PIPE)      throw new Error("Invalid connection type");
         this.connectionType = connectionType;
-
-        this.resource = null!;
-        this.quantity = null!;
+        this.item = null!;
+        this.storageAmount = null!;
     }
 
-    setResource(resource: Item, quantity: number): void {
-        if(resource.getType() == ItemType.SOLID && this.connectionType == InterfaceConnectionType.PIPE)      throw new Error("Invalid resource type");
-        if(resource.getType() == ItemType.FLUID && this.connectionType == InterfaceConnectionType.CONVEYOR)  throw new Error("Invalid resource type");
+    /**
+     * @description Set the item that the interface will be consuming / producing and the local storage for it
+     * @param item The item that this interface will accept
+     * @param storageAmount Maximum amount of items that the building can store locally before overflowing
+     */
+    setItem(item: Item, storageAmount: number): void {
 
-        if(quantity <= 0)       throw new Error("Quantity must be greater than 0");
-        
-        this.resource = resource;
-        this.quantity = quantity;
+        if(storageAmount <= 0)       throw new Error("amount must be greater than 0");
+        this.item = item;
+        this.storageAmount = storageAmount;
     }
 
+    /**
+     * 
+     * @returns whether the interface is an input or output
+     */
     getDirection(): InterfaceDirection {
         return this.direction;
     }
 
+    /**
+     * 
+     * @returns whether the interface is for a conveyor belt or a pipe
+     */
     getConnectionType(): InterfaceConnectionType {
         return this.connectionType;
     }
 
+    /**
+     * 
+     * @returns the item that this interface will accept
+     */
     getResource(): Item {
-        return this.resource;
+        return this.item;
     }
 
-    getQuantity(): number {
-        return this.quantity;
+    /**
+     * 
+     * @returns the max amount of items that the building can store locally before overflowing
+     */
+    getStorageAmount(): number {
+        return this.storageAmount;
     }
 }

@@ -10,14 +10,14 @@ export class RecipePart {
      * @param amount The amount of items needed for the recipe
      */
     constructor(item: Item, amount: number) {
-        if(amount <= 0) throw new Error("Amount must be larger than 0");
+        if(amount <= 0) throw new Error("Amount must be greater than 0");
         this.item = item;
         this.amount = amount;
     }
 
     /**
      * 
-     * @returns The item, that is used for the recipe
+     * @returns the item that is used for the recipe
      */
     getResource(): Item {
         return this.item;
@@ -25,7 +25,7 @@ export class RecipePart {
 
     /**
      * 
-     * @returns The amount of items that are required for the recipe
+     * @returns the amount of items that are required for the recipe
      */
     getQuantity(): number {
         return this.amount;

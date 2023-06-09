@@ -14,12 +14,12 @@ describe("Tests for RecipeResource class", () => {
         expect(recipeResource.getQuantity()).toBe(quantity);
     })
 
-    test("constructor setting quantity = 0 throws error", () => {
-        expect(() => new RecipePart(new Item("r1", ItemType.SOLID), 0)).toThrow("Amount must be larger than 0");
+    test("constructor setting amount = 0 throws error", () => {
+        expect(() => new RecipePart(new Item("r1", ItemType.SOLID), 0)).toThrow("Amount must be greater than 0");
     })
 
-    test("constructor setting quantity < 0 throws error", () => {
-        expect(() => new RecipePart(new Item("r1", ItemType.SOLID), -3)).toThrow("Amount must be larger than 0");
+    test("constructor setting amount < 0 throws error", () => {
+        expect(() => new RecipePart(new Item("r1", ItemType.SOLID), -3)).toThrow("Amount must be greater than 0");
     })
 })
 

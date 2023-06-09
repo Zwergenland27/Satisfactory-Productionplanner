@@ -2,7 +2,7 @@ import { BuildingsModel } from "../../backend/models/buildingsModel"
 import { BuildingView } from "./buildingView"
 import { View } from "./view"
 
-export class BuildingsPresenter {
+export class BuildingPresenter {
     private model: BuildingsModel
     private view: View
 

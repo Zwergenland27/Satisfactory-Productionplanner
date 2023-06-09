@@ -1,14 +1,14 @@
 import { Building } from "../../satisfactory/building"
 import { BuildingView } from "./buildingView"
-import { BuildingsPresenter } from "./buildingsPresenter"
+import { BuildingPresenter } from "./buildingPresenter"
 
 export class View {
 
-    private buildingsPresenter: BuildingsPresenter
+    private buildingsPresenter: BuildingPresenter
     private designer: HTMLElement
     private draggedObject
 
-    constructor(buildingsPresenter: BuildingsPresenter) {
+    constructor(buildingsPresenter: BuildingPresenter) {
         this.buildingsPresenter = buildingsPresenter
         this.designer = null!
         this.draggedObject = null!
