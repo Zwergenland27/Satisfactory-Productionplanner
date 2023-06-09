@@ -1,25 +1,25 @@
-import { Recipe, RecipeItem } from "../src/satisfactory/recipe"
+import { Recipe, RecipePart } from "../src/satisfactory/recipe"
 import { Item, ItemType } from "../src/satisfactory/item";
 
 describe("Tests for RecipeResource class", () => {
     test("constructor setting resource", () => {
         let resource: Item = new Item("r1", ItemType.SOLID);
-        let recipeResource: RecipeItem = new RecipeItem(resource, 10);
+        let recipeResource: RecipePart = new RecipePart(resource, 10);
         expect(recipeResource.getResource()).toBe(resource);
     })
 
     test("constructor setting quantity > 0", () => {
         let quantity = 15;
-        let recipeResource: RecipeItem = new RecipeItem(new Item("r1", ItemType.SOLID), quantity);
+        let recipeResource: RecipePart = new RecipePart(new Item("r1", ItemType.SOLID), quantity);
         expect(recipeResource.getQuantity()).toBe(quantity);
     })
 
     test("constructor setting quantity = 0 throws error", () => {
-        expect(() => new RecipeItem(new Item("r1", ItemType.SOLID), 0)).toThrow("Quantity must be larger than 0");
+        expect(() => new RecipePart(new Item("r1", ItemType.SOLID), 0)).toThrow("Amount must be larger than 0");
     })
 
     test("constructor setting quantity < 0 throws error", () => {
-        expect(() => new RecipeItem(new Item("r1", ItemType.SOLID), -3)).toThrow("Quantity must be larger than 0");
+        expect(() => new RecipePart(new Item("r1", ItemType.SOLID), -3)).toThrow("Amount must be larger than 0");
     })
 })
 
