@@ -19,6 +19,9 @@ interface BuildingTemplate {
 export class BuildingsLoader {
     private static buildings: Building[] = new Array();
 
+    /**
+     * @description Load all buildings from res/buildings.json.
+     */
     static loadBuildings() {
         let buildingTemplaes: BuildingTemplate[] = buildings as BuildingTemplate[];
         buildingTemplaes.forEach(buildingTemplate => {
@@ -26,6 +29,11 @@ export class BuildingsLoader {
         })
     }
 
+    /**
+     * @description Attention: BuildingsLoader.loadBuildings() must be called before using this method!
+     * @param id Building specific Id of the object to clone
+     * @returns a clone of the Building, only with initial values (see Building.clone()) If no matching building is found, null is returned
+     */
     static getBuilding(id: string): Building {
         let buildingFound: Building = null!;
         this.buildings.forEach(building => {
@@ -36,6 +44,10 @@ export class BuildingsLoader {
         return buildingFound;
     }
 
+    /**
+     * 
+     * @returns an array of all Buildings
+     */
     static getBuildings(): Building[] {
         return this.buildings;
     }
