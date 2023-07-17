@@ -3,6 +3,7 @@ import { Menu } from "./menu"
 
 export class Titlebar {
 
+    private window: Window;
     private ipcRenderer: IpcRenderer
 
     private minimizeWindow: HTMLElement;
@@ -10,7 +11,8 @@ export class Titlebar {
     private unmaximizeWindow: HTMLElement;
     private closeWindow: HTMLElement;
 
-    constructor(){
+    constructor(window: Window){
+        this.window = window;
         this.ipcRenderer = ipcRenderer;
         this.minimizeWindow = null!;
         this.maximizeWindow = null!;
@@ -44,7 +46,7 @@ export class Titlebar {
     }
 
     private createMenu(menuDOM: HTMLElement): void {
-        let menu = new Menu(menuDOM);
+        let menu = new Menu(this.window, menuDOM);
     }
 
     private create(): void {

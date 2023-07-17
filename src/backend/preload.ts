@@ -4,7 +4,7 @@ import {BuildingsModel} from "../backend/models/buildingsModel"
 import {BuildingPresenter} from "../frontend/scripts/buildingPresenter"
 
 window.addEventListener("DOMContentLoaded", () => {
-    new Titlebar();
+    new Titlebar(window);
 
     let buildingsModel: BuildingsModel = new BuildingsModel();
     let buildingsPresenter: BuildingPresenter = new BuildingPresenter(buildingsModel);
