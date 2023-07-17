@@ -1,3 +1,5 @@
+import {ipcRenderer} from "electron";
+
 class MenuItem {
     private title: string;
     private description: string | undefined;
@@ -60,9 +62,19 @@ class MenuTab {
     }
 }
 
+function openDocsFile() {
+    let input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/JSON";
+    input.addEventListener("change", () => {
+        console.log(input.files);
+    })
+    input.click();
+}
+
 const fileMenu = [
-    new MenuItem("read Items", () => {console.log("rItems")}, "read items from the docs json"),
-    new MenuItem("quit", () => {console.log("quit")}, "quit the application")
+    new MenuItem("read Items", () => {openDocsFile();}, "read items from the docs json"),
+    new MenuItem("quit", () => {ipcRenderer.send("window-control", "window-close");}, "quit the application")
 ]
 
 const editMenu = [
